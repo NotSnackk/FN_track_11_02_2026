@@ -11,10 +11,16 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var binding: SearchActivityBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        ThemePreferences.applyTheme(this)
         super.onCreate(savedInstanceState)
         binding = SearchActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
         Log.d("SearchActivity", "onCreate")
+
+        binding.themeToggle.isChecked = ThemePreferences.isDarkTheme(this)
+        binding.themeToggle.setOnCheckedChangeListener { _, isChecked ->
+            ThemePreferences.setDarkTheme(this, isChecked)
+        }
 
         binding.searchButton.setOnClickListener {
             submitQuery()

@@ -21,10 +21,16 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: MainActivityBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        ThemePreferences.applyTheme(this)
         super.onCreate(savedInstanceState)
         binding = MainActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
         Log.d("MainActivity", "onCreate")
+
+        binding.themeToggle.isChecked = ThemePreferences.isDarkTheme(this)
+        binding.themeToggle.setOnCheckedChangeListener { _, isChecked ->
+            ThemePreferences.setDarkTheme(this, isChecked)
+        }
 
         binding.error.visibility = View.GONE
         binding.loading.visibility = View.GONE
